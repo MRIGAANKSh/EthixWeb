@@ -12,6 +12,7 @@ An India-specific redesign of [Ethixweb](https://www.ethixweb.com/), featuring a
 | **PageSpeed Insights — Mobile** | [View screenshot](docs/mobile.png) |
 | **PageSpeed Insights — Desktop** | [View screenshot](docs/laptop.png) |
 | **Demo Admin Dashboard** | [Open Admin Panel](https://ethix-web-lake.vercel.app/admin) |
+| **Demo Admin Email** | `admin@ethixweb.com` |
 | **Demo Admin Password** | `admin@123` |
 
 
