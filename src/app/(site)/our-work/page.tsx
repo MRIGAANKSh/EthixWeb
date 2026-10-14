@@ -1,14 +1,33 @@
 
-import Link from "next/link";
-import CtaBand from "@/components/CtaBand";
+"use client";
 
-export const metadata = {
-  title: "Our Work | Ethixweb India",
-  description:
-    "Explore Ethixweb's website design, e-commerce and digital growth concepts for Indian businesses.",
+import Link from "next/link";
+import { useState } from "react";
+
+type Project = {
+  number: string;
+  name: string;
+  category: string;
+  type: string;
+  headline: string;
+  description: string;
+  services: string[];
+  mark: string;
+  gradient: string;
 };
 
-const projects = [
+type ProcessStep = {
+  number: string;
+  title: string;
+  description: string;
+};
+
+type ProjectPreviewProps = {
+  mark: string;
+  gradient: string;
+};
+
+const projects: Project[] = [
   {
     number: "01",
     name: "Home Services",
@@ -29,7 +48,11 @@ const projects = [
     headline: "Make every shopping journey simpler.",
     description:
       "An e-commerce concept focused on product discovery, mobile shopping and familiar Indian payment experiences.",
-    services: ["Product-led design", "UPI-ready checkout", "Mobile optimisation"],
+    services: [
+      "Product-led design",
+      "UPI-ready checkout",
+      "Mobile optimisation",
+    ],
     mark: "D2",
     gradient: "from-amber-100 via-yellow-50 to-white",
   },
@@ -53,13 +76,17 @@ const projects = [
     headline: "Make the next booking feel effortless.",
     description:
       "A responsive experience that helps customers explore destinations, understand experiences and enquire about bookings.",
-    services: ["Responsive UX", "Experience-led content", "Booking enquiries"],
+    services: [
+      "Responsive UX",
+      "Experience-led content",
+      "Booking enquiries",
+    ],
     mark: "HT",
     gradient: "from-emerald-100 via-teal-50 to-white",
   },
 ];
 
-const process = [
+const process: ProcessStep[] = [
   {
     number: "01",
     title: "Discover",
@@ -86,12 +113,14 @@ const process = [
   },
 ];
 
+const filters = ["All", "Web Design", "E-commerce", "UX Design"];
+
 function ArrowIcon() {
   return (
     <svg
       viewBox="0 0 20 20"
       fill="none"
-      className="h-4 w-4"
+      className="h-4 w-4 shrink-0"
       aria-hidden="true"
     >
       <path
@@ -105,18 +134,19 @@ function ArrowIcon() {
   );
 }
 
-function ProjectPreview({ mark, gradient }) {
+function ProjectPreview({ mark, gradient }: ProjectPreviewProps) {
   return (
     <div
-      className={`relative flex min-h-[230px] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-6 sm:min-h-[280px]`}
+      className={`relative flex min-h-[230px] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-5 sm:min-h-[280px] sm:p-6`}
     >
       <div
         aria-hidden="true"
-        className="absolute -right-12 -top-16 h-48 w-48 rounded-full border border-black/[0.07]"
+        className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full border border-black/[0.07]"
       />
+
       <div
         aria-hidden="true"
-        className="absolute -bottom-20 -left-12 h-56 w-56 rounded-full border border-black/[0.07]"
+        className="pointer-events-none absolute -bottom-20 -left-12 h-56 w-56 rounded-full border border-black/[0.07]"
       />
 
       <div className="relative w-full max-w-sm rotate-[-2deg] rounded-xl border border-black/[0.07] bg-white p-4 shadow-xl shadow-black/10 transition duration-300 group-hover:rotate-0 group-hover:scale-[1.02] sm:p-5">
@@ -154,7 +184,7 @@ function ProjectPreview({ mark, gradient }) {
         </div>
       </div>
 
-      <span className="absolute bottom-4 right-4 rounded-full border border-black/5 bg-white/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-500 backdrop-blur">
+      <span className="absolute bottom-4 right-4 rounded-full border border-black/5 bg-white/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-600 backdrop-blur">
         Concept project
       </span>
     </div>
@@ -162,8 +192,15 @@ function ProjectPreview({ mark, gradient }) {
 }
 
 export default function OurWorkPage() {
+  const [activeFilter, setActiveFilter] = useState<string>("All");
+
+  const visibleProjects =
+    activeFilter === "All"
+      ? projects
+      : projects.filter((project) => project.category === activeFilter);
+
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-line">
         <div
@@ -238,25 +275,31 @@ export default function OurWorkPage() {
           </p>
         </div>
 
+        {/* Functional category filters */}
         <div className="mt-8 flex flex-wrap gap-2">
-          {["All", "Web Design", "E-commerce", "UX Design"].map(
-            (filter, index) => (
-              <span
+          {filters.map((filter) => {
+            const isActive = activeFilter === filter;
+
+            return (
+              <button
                 key={filter}
-                className={`rounded-full border px-4 py-2 text-sm font-medium ${
-                  index === 0
+                type="button"
+                onClick={() => setActiveFilter(filter)}
+                aria-pressed={isActive}
+                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive
                     ? "border-brand bg-brand text-white"
-                    : "border-line bg-white text-ink-soft"
+                    : "border-line bg-white text-ink-soft hover:border-brand hover:text-brand"
                 }`}
               >
                 {filter}
-              </span>
-            )
-          )}
+              </button>
+            );
+          })}
         </div>
 
         <div className="mt-8 grid gap-8 md:grid-cols-2 md:gap-7">
-          {projects.map((project) => (
+          {visibleProjects.map((project) => (
             <article key={project.number} className="group min-w-0">
               <ProjectPreview
                 mark={project.mark}
@@ -385,8 +428,6 @@ export default function OurWorkPage() {
           </div>
         </div>
       </section>
-
-      <CtaBand />
-    </>
+    </main>
   );
 }
