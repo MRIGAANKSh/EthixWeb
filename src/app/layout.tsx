@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/bricolage-grotesque";
-import "@fontsource/hind/400.css";
-import "@fontsource/hind/500.css";
-import "@fontsource/hind/600.css";
+import { Bricolage_Grotesque, Hind } from "next/font/google";
 import "./globals.css";
+
+const display = Bricolage_Grotesque({ subsets: ["latin"], display: "swap", variable: "--font-display" });
+const body = Hind({ subsets: ["latin"], weight: ["400", "600"], display: "swap", variable: "--font-body" });
+// Devanagari loads only when Hindi text is on the page
+const deva = Hind({ subsets: ["devanagari"], weight: ["600"], display: "swap", preload: false, variable: "--font-deva" });
 
 const site = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -19,7 +21,7 @@ export const viewport: Viewport = { themeColor: "#C4222B", width: "device-width"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" className={`${display.variable} ${body.variable} ${deva.variable}`}>
       <body>{children}</body>
     </html>
   );

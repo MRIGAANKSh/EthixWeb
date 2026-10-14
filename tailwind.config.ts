@@ -12,9 +12,9 @@ const config: Config = {
         line: "#E4E2EE",
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque Variable"', "system-ui", "sans-serif"],
-        body: ["Hind", "system-ui", "sans-serif"],
-      },
+  display: ["var(--font-display)", "var(--font-deva)", "system-ui", "sans-serif"],
+  body: ["var(--font-body)", "var(--font-deva)", "system-ui", "sans-serif"],
+},
     },
   },
   plugins: [],
