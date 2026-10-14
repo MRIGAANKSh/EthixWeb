@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ethixweb India
 
 India-specific redesign of ethixweb.com. Full stack: premium marketing site, working enquiry pipeline into Supabase (PostgreSQL), and a protected `/admin` lead manager.
@@ -72,3 +73,7 @@ Indian SMB buyers decide on trust and convenience: seeing UPI, WhatsApp and thei
 ## Content notes
 
 Featured-work projects, prices, and contact details are illustrative placeholders; replace them in `src/lib/content.ts` (and set contact env vars) before production use. Swap the text wordmark in `src/components/Logo.tsx` for the official Ethixweb logo SVG.
+=======
+# EthixWeb
+this is the assignment repo of the ethixweb
+>>>>>>> 047ed0ff04121c76b887f1da40763beafc94199f
